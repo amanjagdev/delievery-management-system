@@ -26,12 +26,8 @@ const app = express()
 // CORS ERROR FOR SERVER REQUEST
 app.use(cors())
 
-// BODY PARSER MIDDLEWARE IN USE
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
-
 // API IN APP
-app.use('/api/addproduct', productApi)
+app.use('/api/product', productApi)
 
 
 app.get('/', (req, res) => {
