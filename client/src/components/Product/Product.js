@@ -1,80 +1,32 @@
-import React, {useContext, useState} from 'react';
+import React from 'react';
 import './Product.css';
-import {Card, Button, Alert} from 'react-bootstrap'
-import {GlobalContext} from '../../context/GlobalState'
 
 const Product = (props) => {
 
-  const {addToCart} = useContext(GlobalContext);
-  const {removeFromCart} = useContext(GlobalContext);
-
-  const {items} = useContext(GlobalContext);
-  const {cart} = useContext(GlobalContext);
-
-  let [active,
-    setActive] = useState(false);
-  let [activeError,
-    setActiveError] = useState(false);
-
-  function addCart(id) {
-    let flag = 1;
-    cart.forEach((item) => {
-      if (item.id === id && item.qty === 20) {
-        flag = 0;
-      }
-    })
-    if (flag) {
-      items.forEach((item) => {
-        if (item.id === id) {
-          addToCart(item);
-        }
-      });
-      setActive(true);
-      setTimeout(() => {
-        setActive(false);
-      }, 1000);
-    } else {
-      setActiveError(true);
-      setTimeout(() => {
-        setActiveError(false);
-      }, 1000);
-    }
+  const subProduct = (pro) => {
+    return (
+      <React.Fragment>
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">Item : {pro.product_name} </h5>
+            <h6 className="card-subtitle mb-2 text-muted">Quantity : {pro.product_qty}</h6>
+          </div>
+        </div>
+      </React.Fragment>
+    );
   }
 
   return (
-    <Card className="main__card" style={{
-      width: '20rem'
-    }}>
-      <Card.Body>
-        <Card.Img variant="top" src={"img/product ("+props.item.id+").png"}/>
-        <Card.Title>{props.item.name}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">$ {props.item.price}</Card.Subtitle>
-        <Card.Text>
-
-          {props.from === "cart"
-            ? <React.Fragment></React.Fragment>
-            : props.item.desc}
-        </Card.Text>
-        {(props.from === "cart")
-          ? <Card.Text>
-              Quantity : {props.item.qty}
-            </Card.Text>
-          : <React.Fragment></React.Fragment>
+    <React.Fragment>
+      <h2>Flat No : {props.item.fno}</h2><br/>
+      <div className="row pl-4">
+      {props
+        .item
+        .product
+        .map((product) => (subProduct(product)))
 }
-        <Button variant="dark">
-          {(props.from === "cart")
-            ? <Card.Link onClick={() => removeFromCart(props.item.id)}>Remove</Card.Link>
-            : <Card.Link onClick={() => addCart(props.item.id)}>Add to Cart</Card.Link>
-}
-        </Button>
-        <Card.Text>
-          <br></br>
-          <Alert show={active} variant="success">Product is added in cart</Alert>
-          <Alert show={activeError} variant="danger">Product quantity can not be over 20</Alert>
-        </Card.Text>
-
-      </Card.Body>
-    </Card>
+      </div>
+    </React.Fragment>
   );
 }
 

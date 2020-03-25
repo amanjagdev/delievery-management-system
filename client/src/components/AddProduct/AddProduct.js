@@ -1,43 +1,52 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import './AddProduct.css';
-import {GlobalContext} from '../../context/GlobalState';
 import {Alert} from 'react-bootstrap'
 
 const AddProduct = props => {
 
-  const {addProduct} = useContext(GlobalContext);
-
-  //use state hooks to manage data of product
-  const [rowno,
-    setRowno] = useState(21);
-  const [desc,
-    setDesc] = useState('');
-  const [name,
-    setName] = useState('');
-  const [price,
-    setPrice] = useState(0);
-
-  //To handle alerts
-  let [active, setActive] = useState(false);
+  const [fno, setFno] = useState(0);
+  const [active,setActive] = useState(false);
+  const [counter,setCounter] = useState(1);
+  const [products,setProducts] = useState([{
+    pname : "none",
+    pqty: "none"
+  }]);
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // setActive(true);
 
-    const newItem = {
-      id: rowno,
-      name,
-      desc,
-      price: Number(price),
-      qty: 0
+  }
+
+  const handleCounter = (value) => {
+      if(value){
+        setCounter( counter + 1);
+      }else{
+        if(counter >= 2){
+          setCounter(counter -1);
+        }
+      }
+  }
+
+  const addProductsDisplay = () => {
+    const temp = [];
+    for(let i =1;i<=counter;i++){
+      temp.push(
+      <React.Fragment key={i}>
+          <h4>Product No : {i}</h4>
+          <div className="form-group">
+            <label htmlFor="fno">Product Name : </label>
+            <input type="number" className="form-control" id="fno" value={products[i].pname} onChange={(e) => setFno(e.target.value)}></input>
+          </div>
+          <div className="form-group">
+            <label htmlFor="fno">Product Quantity : </label>
+            <input type="number" className="form-control" id="fno" value={products[i]} onChange={(e) => setFno(e.target.value)}></input>
+          </div>
+      </React.Fragment>
+      )
     }
-    setRowno(rowno + 1);
-    console.log(newItem);
-
-    addProduct(newItem);
-    setActive(true);
-      setTimeout(() => {
-        setActive(false);
-      }, 1000);
+    return temp;
   }
 
   return (
@@ -46,18 +55,23 @@ const AddProduct = props => {
         <h1>Add Product</h1>
 
         <form onSubmit={handleSubmit}>
+
           <div className="form-group">
-            <label htmlFor="name">Product Name</label>
-            <input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)}></input>
+            <label htmlFor="fno">Flat No : </label>
+            <input type="number" className="form-control" id="fno" value={fno} onChange={(e) => setFno(e.target.value)}></input>
           </div>
-          <div className="form-group">
-            <label htmlFor="desc">Product Description</label>
-            <input type="text" className="form-control" id="desc" value={desc} onChange={(e) => setDesc(e.target.value)}></input>
+
+          
+          <div className="row">
+            <button className="btn btn-primary ml-3 mr-4" onClick={() => handleCounter(0)}>-</button> 
+                 <div className="counter">{counter}</div>
+            <button className="btn btn-primary ml-4" onClick={() => handleCounter(1)}>+</button>
           </div>
-          <div className="form-group">
-            <label htmlFor="price">Product Price</label>
-            <input type="number" className="form-control" id="price" value={price} onChange={(e) => setPrice(e.target.value)}></input>
-          </div>
+
+          <br/><br/>
+          <h3>Now add products : </h3><br/>
+
+          {addProductsDisplay()}
 
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>

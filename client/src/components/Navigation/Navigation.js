@@ -7,13 +7,12 @@ const Navigation = props => {
     return(
     <>
         <Navbar bg="dark" variant="dark" expand="lg">
-            <Navbar.Brand href="#home">React Shop</Navbar.Brand>
+            <Navbar.Brand href="#home">Shopify</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto justify-content-end">
                     <Nav.Link onClick={() => (props.history.push('/'))} >Home</Nav.Link>
-                    <Nav.Link onClick={() => (props.history.push('/cart'))} >Cart</Nav.Link>
-                    <Nav.Link onClick={() => (props.history.push('/addproduct'))} >Add Product</Nav.Link>
+                    <Nav.Link onClick={() => (props.history.push('/view'))} >View</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

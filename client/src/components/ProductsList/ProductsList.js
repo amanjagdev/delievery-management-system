@@ -1,22 +1,27 @@
-import React, {useContext} from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
 import './ProductsList.css';
 import Product from '../Product/Product';
 
-//Importing Context
-import {GlobalContext} from '../../context/GlobalState';
-
 const ProductsList = props => {
 
-  const {items} = useContext(GlobalContext);
+  const [plist, setPlist] = useState([]);
+
+  axios.get('http://localhost:5000/api/product/view')
+  .then(res => {
+    setPlist(res.data);
+  })
+  .catch(err => {
+    console.log("<<PRODUCT RESPONSE>>",err)
+  })
 
   return (
     <React.Fragment>
-      <h1 className="main__title">Products List</h1>
-      <div className="row pl-4">
-        {
-        //Mapping objects to be displayed
-        items.map(item => (<Product item={item} key={item.id} from="products"/>))
-        }
+      <h1 className="main__title">Details of all the products</h1>
+      <div className="pl-4">
+      {
+        plist.map((data) => <Product item={data} key={data.id} />)
+      }
       </div>
 
     </React.Fragment>

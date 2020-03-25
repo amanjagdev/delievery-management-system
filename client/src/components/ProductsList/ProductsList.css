@@ -1,3 +1,5 @@
 .main__title{
     margin: 20px;
+    border-bottom: 3px solid black;
+    width: fit-content;
 }
