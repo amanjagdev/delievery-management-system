@@ -8,6 +8,7 @@ const Product = require('../models/Product')
     @access  Public
 */
 router.get('/test', (req, res) => {
+    console.log(req.body)
     res.json({
         msg: 'Route tested api/product/test'
     })
@@ -24,11 +25,12 @@ router.post('/add', (req, res) => {
 
     //Parameters:
     //  fno
-    // productsList{pname,pqty}
+    // products{pname,pqty}
+
+    console.log(req.body);
 
     let productsListArray =[];
-    console.log(req.params.productsList)
-    req.params.productsList.forEach((product) => {
+    req.body.products.forEach((product) => {
         const temp = {
             product_name: product.pname,
             product_qty: product.pqty,
@@ -37,9 +39,11 @@ router.post('/add', (req, res) => {
     });
 
     const newProduct = new Product({
-        flat_number: req.params.fno,
+        fno: req.body.fno,
         product: productsListArray
     })
+
+    console.log("product >> ",newProduct);
 
     newProduct.save()
     .then(product => {

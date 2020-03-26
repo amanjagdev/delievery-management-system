@@ -2,9 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
-    flat_number: {
-        type: Number,
-        required: true
+    fno: {
+        type: Number
     },
     product: [{
         product_name: {

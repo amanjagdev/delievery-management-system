@@ -3,7 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const keys = require('./keys/keys')
 const cors = require('cors')
-
+const bodyParser = require('body-parser');
 
 //Connecting to the Database
 mongoose
@@ -15,8 +15,6 @@ mongoose
 
 mongoose.set('useCreateIndex', true);
 
-
-
 // Loading all the api
 const productApi = require('./api/addproduct')
 
@@ -25,6 +23,11 @@ const app = express()
 
 // CORS ERROR FOR SERVER REQUEST
 app.use(cors())
+
+
+// BODY PARSER MIDDLEWARE IN USE
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // API IN APP
 app.use('/api/product', productApi)
