@@ -7,7 +7,6 @@ const AddProduct = props => {
 
   const [fno, setFno] = useState(0);
   const [active,setActive] = useState(false);
-  const [activeError,setActiveError] = useState(false);
   const [counter,setCounter] = useState(1);
   const [products,setProducts] = useState([{
     pname : "none",
@@ -19,26 +18,20 @@ const AddProduct = props => {
     event.preventDefault();
     console.log(products,fno);
     
-    axios.post('http://localhost:5000/api/product/add', {
+    //Replace this with your rest api path
+    axios.post('https://dmsrestapi.herokuapp.com/api/product/add', {
       fno: fno,
       products: products
-    })
-    .then(function (response) {
+    }).then(function (response) {
       console.log(response);
-      setActive(true);
-      setTimeout(() => {
-          setActive(false)
-      }, 1000);
     })
     .catch(function (error) {
       console.log(error);
-      setActiveError(true);
-      setTimeout(() => {
-          setActiveError(false)
-      }, 1000);
     });
-
-    
+    setActive(true);
+      setTimeout(() => {
+          setActive(false)
+      }, 1000);
 
   }
 
@@ -105,7 +98,6 @@ const AddProduct = props => {
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
         <Alert show={active} variant="success">Products are added succesfully</Alert>
-        <Alert show={activeError} variant="danger">There was some error</Alert>
 
 
       </div>

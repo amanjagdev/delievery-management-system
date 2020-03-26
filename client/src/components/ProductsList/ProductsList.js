@@ -7,7 +7,8 @@ const ProductsList = props => {
 
   const [plist, setPlist] = useState([]);
 
-  axios.get('http://localhost:5000/api/product/view')
+  //Replace this with your api path
+  axios.get('https://dmsrestapi.herokuapp.com/api/product/view')
   .then(res => {
     setPlist(res.data);
   })
